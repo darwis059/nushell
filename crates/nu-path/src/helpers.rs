@@ -1,13 +1,17 @@
 #[cfg(windows)]
 use omnipath::WinPathExt;
 use std::path::PathBuf;
+use std::env;
 
 pub fn home_dir() -> Option<PathBuf> {
     dirs_next::home_dir()
 }
 
 pub fn config_dir() -> Option<PathBuf> {
-    dirs_next::config_dir()
+    let mut path = env::current_exe().ok()?;
+    path.pop();
+    path.push("config");
+    Some(path)
 }
 
 #[cfg(windows)]
